@@ -21,8 +21,8 @@ public class Robot extends TimedRobot {
   private Joystick m_leftStick;
   private Joystick m_rightStick;
 
-  private final CANSparkMax m_leftMotor = new CANSparkMax(10, MotorType.kBrushless);
-  private final CANSparkMax m_rightMotor = new CANSparkMax(20, MotorType.kBrushless);
+  private final CANSparkMax m_leftMotor = new CANSparkMax(20, MotorType.kBrushless);
+  private final CANSparkMax m_rightMotor = new CANSparkMax(10, MotorType.kBrushless);
   //private final PWMSparkMax m_leftMotor = new PWMSparkMax(0);
   //private final PWMSparkMax m_rightMotor = new PWMSparkMax(1);
 
