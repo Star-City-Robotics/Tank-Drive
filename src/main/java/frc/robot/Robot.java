@@ -4,8 +4,11 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,9 +23,10 @@ public class Robot extends TimedRobot {
   private DifferentialDrive m_robotDrive;
   private Joystick m_leftStick;
   private Joystick m_rightStick;
+  private SparkMaxConfig config = new SparkMaxConfig();
 
-  private final CANSparkMax m_leftMotor = new CANSparkMax(20, MotorType.kBrushless);
-  private final CANSparkMax m_rightMotor = new CANSparkMax(10, MotorType.kBrushless);
+  private final SparkMax m_leftMotor = new SparkMax(20, MotorType.kBrushless);
+  private final SparkMax m_rightMotor = new SparkMax(10, MotorType.kBrushless);
   //private final PWMSparkMax m_leftMotor = new PWMSparkMax(0);
   //private final PWMSparkMax m_rightMotor = new PWMSparkMax(1);
 
@@ -34,8 +38,10 @@ public class Robot extends TimedRobot {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    m_rightMotor.setInverted(true);
-
+    config.inverted(true);
+    m_rightMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_leftMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    
     m_robotDrive = new DifferentialDrive(m_leftMotor::set, m_rightMotor::set);
     m_leftStick = new Joystick(0);
     m_rightStick = new Joystick(1);
