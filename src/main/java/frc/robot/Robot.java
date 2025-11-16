@@ -38,9 +38,9 @@ public class Robot extends TimedRobot {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    config.inverted(true);
-    m_rightMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    m_leftMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // config.inverted(true);
+    //m_rightMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    //m_leftMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     m_robotDrive = new DifferentialDrive(m_leftMotor::set, m_rightMotor::set);
     m_leftStick = new Joystick(0);
@@ -49,6 +49,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.tankDrive(-m_leftStick.getY(), -m_rightStick.getY());
+    m_robotDrive.tankDrive(-m_leftStick.getY(), m_rightStick.getY());
   }
 }
