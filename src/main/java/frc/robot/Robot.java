@@ -11,9 +11,11 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * This is a demo program showing the use of the DifferentialDrive class, specifically it contains
@@ -21,8 +23,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class Robot extends TimedRobot {
   private DifferentialDrive m_robotDrive;
-  private Joystick m_leftStick;
-  private Joystick m_rightStick;
+  private final CommandXboxController driverController = new CommandXboxController(0);
   private SparkMaxConfig config = new SparkMaxConfig();
 
   private final SparkMax m_leftMotor = new SparkMax(20, MotorType.kBrushless);
@@ -43,12 +44,10 @@ public class Robot extends TimedRobot {
     //m_leftMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     m_robotDrive = new DifferentialDrive(m_leftMotor::set, m_rightMotor::set);
-    m_leftStick = new Joystick(0);
-    m_rightStick = new Joystick(1);
   }
 
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.tankDrive(-m_leftStick.getY(), m_rightStick.getY());
+    m_robotDrive.tankDrive(-driverController.getLeftY(), driverController.getRightY());
   }
 }
